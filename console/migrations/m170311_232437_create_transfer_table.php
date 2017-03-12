@@ -18,6 +18,9 @@ class m170311_232437_create_transfer_table extends Migration
             'source_id'      => $this->integer(),
             'destination_id' => $this->integer(),
             'amount'         => $this->integer()->notNull()->defaultValue(1),
+            'status'         => $this->string(),
+            'message'        => $this->string(),
+            'description'    => $this->text(),
             'created_at'     => $this->integer()->notNull(),
             'updated_at'     => $this->integer()->notNull()
         ]);
