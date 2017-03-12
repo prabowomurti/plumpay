@@ -8,10 +8,14 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\User;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+
+use yii\data\ActiveDataProvider;
+
 
 /**
  * Site controller
@@ -129,6 +133,21 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * Display balance of all users
+     * @return mixed
+     */
+    public function actionBalance()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find()->select('username, balance'),
+        ]);
+
+        return $this->render('balance', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
