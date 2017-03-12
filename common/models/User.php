@@ -26,6 +26,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
+    const INITIAL_BALANCE = 10;
 
     /**
      * @inheritdoc
@@ -185,5 +186,22 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Add initial balance for every created user
+     * @param  [type] $insert            [description]
+     * @param  [type] $changedAttributes [description]
+     * @return [type]                    [description]
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        if ($insert)
+        {
+            $this->balance = self::INITIAL_BALANCE;
+            $this->save();
+        }
     }
 }
