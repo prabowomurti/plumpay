@@ -75,7 +75,7 @@ class TransferController extends ZeedController
             $destination_username = $post_transfer['destination_username'];
             $destination = User::findByUsername($destination_username);
 
-            if ($destination->id == Yii::$app->user->id)
+            if ( ! empty($destination) && $destination->id == Yii::$app->user->id)
                 throw new NotFoundHttpException("Why do you send money to yourself?");
 
             if (empty($destination))
